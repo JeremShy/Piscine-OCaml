@@ -6,6 +6,7 @@ let parse_line () = (* Some of (x ,y) | None *)
 			false
 	in
 	let str = read_line () in
+		let str = String.trim str in
 		let lst = String.split_on_char ' ' str in
 		match lst with
 		| [] -> None

@@ -38,13 +38,12 @@ module Make : MAKEFIXED =
 		let round f = int_of_float (floor (f +. 0.5))
 
 		type t = int
-		let bits = FixedSrc.bits
 
-		let of_float src = round (src *. (2. ** float_of_int bits))
-		let of_int src = src lsl bits
+		let of_float src = round (src *. (2. ** float_of_int FixedSrc.bits))
+		let of_int src = src lsl FixedSrc.bits
 
-		let to_float src = (float_of_int src) /. (2. ** float_of_int bits)
-		let to_int src = src lsr bits
+		let to_float src = (float_of_int src) /. (2. ** float_of_int FixedSrc.bits)
+		let to_int src = src lsr FixedSrc.bits
 
 		let to_string src = string_of_float (to_float src)
 

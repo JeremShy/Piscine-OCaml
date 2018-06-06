@@ -1,8 +1,17 @@
-module StringHash : (Hashtbl.HashedType with type t = String.t) =
+module StringHash : (Hashtbl.HashedType with type t = string) =
 struct
-	type t = String.t
+	type t = string
 	let equal i j = i = j
-	let hash str = Hashtbl.hash str
+	let hash str = (
+		fun str ->
+			let rec loop hash i =
+				if (i = String.length str) then
+					hash
+				else
+					loop ((hash lsl 5) + hash + int_of_char (String.get str i)) (i + 1);
+			in
+			loop 5381 0
+		) str
 end
 
 module StringHashtbl = Hashtbl.Make (StringHash)
